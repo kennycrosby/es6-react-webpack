@@ -5,24 +5,26 @@ class App extends React.Component {
 	constructor() {
 		super();
 		this.state = { val : 0 };
-		this.update = this.update.bind(this);
+		// this.update = this.update.bind(this);
 	}
 	update() {
 		this.setState({ val: this.state.val+1 });
 	}
 	componentWillMount() {
-		console.log('mounting');
+		this.setState({m: 2});
 	}
 	componentDidMount() {
-		console.log('MOUNTED');
+		console.log('Component did mount', ReactDOM.findDOMNode(this));
+		this.inc = setInterval(this.update.bind(this),500);
 	}
 	componentWillUnmount() {
 		console.log('bye!!!!');
+		clearInterval(this.inc);
 	}
 	render() {
 		console.log('rendering');
 		return (
-			<button onClick={this.update}>{this.state.val}</button>
+			<button onClick={this.update.bind(this)}>{this.state.val * this.state.m}</button>
 		);
 	}
 }
